@@ -1,0 +1,13 @@
+package ${package};
+
+/**
+ * 页面检索条件
+ * 
+ * @author ${author}
+ * 
+ */
+ 
+public class ${className}SearchDto {
+
+	
+}

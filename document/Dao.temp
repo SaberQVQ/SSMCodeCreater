@@ -1,0 +1,33 @@
+package ${package};
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import ${dtoPackage}${className}Dto;
+import ${dtoPackage}${className}SearchDto;
+import ${entityPackage}${className}Entity;
+
+/**
+ * Dao
+ * 
+ * @author ${author}
+ */
+ 
+public interface ${className}EntityMapper{
+
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(${className}Entity record);
+
+    int insertSelective(${className}Entity record);
+
+    ${className}Entity selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(${className}Entity record);
+
+    int updateByPrimaryKey(${className}Entity record);
+    
+	List<${className}Dto> selectListByPage(@Param("page") PageParameter page, @Param("searchDto") ${className}SearchDto searchDto);
+	
+}

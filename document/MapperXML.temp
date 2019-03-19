@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+
+<!-- create by ${author} -->
+
+<mapper namespace="${daoPackage}${classNameL}EntityMapper">
+
+	<resultMap id="BaseResultMap" type="${entityPackage}${classNameL}Entity" >
+		<#if fieldId??>
+			<id column="${fieldId}" property="${fieldId}" jdbcType="${fieldIdType}" />
+		</#if>
+		<#list fieldList as fields>
+			<result column="${fields.fieldName}" property="${fields.fieldNameProperty}" jdbcType="${fields.fieldType}" /><#if fields_has_next></#if>
+		</#list>
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		<#list fieldList as fields>${fields.fieldName}<#if fields_has_next>, </#if></#list>
+  	</sql>
+  	
+  	<!-- 通过id查询 -->
+  	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+    	<include refid="Base_Column_List" />
+    	from ${tableName}
+    	<#if fieldId??>
+    		where ${fieldId} = #{${fieldId},jdbcType=${fieldIdType}}
+		</#if>
+  	</select>
+  	
+  	<!-- 通过id删除 -->
+  	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    	delete from ${tableName}
+		<#if fieldId??>
+    		where ${fieldId} = #{${fieldIdProperty},jdbcType=${fieldIdType}}
+		</#if>
+	</delete>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="${entityPackage}${classNameL}Entity" useGeneratedKeys="true" keyColumn="${fieldId}" keyProperty="${fieldIdProperty}">
+		insert into ${tableName}
+		(<#list fieldList as fields>${fields.fieldName}<#if fields_has_next>, </#if></#list>)
+		values
+		(<#list fieldList as fields>#{${pro.fieldNameL},jdbcType=${pro.fieldIdType}}<#if fields_has_next>, </#if></#list>)
+	</insert>
+  
+	<insert id="insertSelective" parameterType="com.hyapp.entity.BasEndProduceEntity" >
+    	insert into bas_end_produce
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+	        	ID,
+	      	</if>
+	      	<if test="endProduceName != null" >
+	        	END_PRODUCE_NAME,
+	      	</if>
+	      	<if test="endProduceCode != null" >
+	        	END_PRODUCE_CODE,
+	      	</if>
+	      	<if test="remark != null" >
+	        	REMARK,
+	      	</if>
+	      	<if test="usageRate != null" >
+	        	USAGE_RATE,
+	      	</if>
+	       	<if test="usageRate != null" >
+	        	IS_WORKING,
+	      	</if>
+    	</trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="endProduceName != null" >
+        #{endProduceName,jdbcType=VARCHAR},
+      </if>
+      <if test="endProduceCode != null" >
+        #{endProduceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="usageRate != null" >
+        #{usageRate,jdbcType=INTEGER},
+      </if>
+      <if test="isWorking != null" >
+        #{isWorking,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  	<!-- 通过id删除 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hyapp.entity.BasEndProduceEntity" >
+    update bas_end_produce
+    <set >
+      <if test="endProduceName != null" >
+        END_PRODUCE_NAME = #{endProduceName,jdbcType=VARCHAR},
+      </if>
+      <if test="endProduceCode != null" >
+        END_PRODUCE_CODE = #{endProduceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="usageRate != null" >
+        USAGE_RATE = #{usageRate,jdbcType=INTEGER},
+      </if>
+       <if test="isWorking != null" >
+        IS_WORKING = #{isWorking,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  	<!-- 通过id删除 -->
+  <update id="updateByPrimaryKey" parameterType="com.hyapp.entity.BasEndProduceEntity" >
+    update bas_end_produce
+    set END_PRODUCE_NAME = #{endProduceName,jdbcType=VARCHAR},
+      END_PRODUCE_CODE = #{endProduceCode,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      USAGE_RATE = #{usageRate,jdbcType=INTEGER},
+      IS_WORKING = #{isWorking,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+	<!-- select -->
+	<select id="getByID" resultType="${entityPackage}${classNameL}.${className}">
+		<![CDATA[   
+			select * from ${classNameLL} 
+		]]>
+		<where>
+			${classNameLL}id = #${dakuohao}ID}
+		</where>
+	</select>
+	
+	<select id="getByCondition" resultType="${entityPackage}${classNameL}.${className}">
+		<![CDATA[   
+			select * from ${classNameLL} 
+		]]>
+		<where>
+			<if test="condition != null">
+		 		${dollor}{condition}
+		 	</if>
+		</where>
+	</select>
+	
+	<select id="getCountByCondition" resultType="int">
+		select count(distinct ${classNameLL}id) from ${classNameLL}
+		<where>
+        	<if test="condition != null">
+        		${dollor}{condition}
+        	</if>	
+        </where>
+	</select>
+	
+	<select id="findByID" resultType="map">
+		select 
+		<foreach collection="properties" item="item" index="index" separator=",">
+          	${dollor}{item}
+        </foreach>
+        from ${classNameLL} 
+        <where>
+        	${classNameLL}id = ${jinhao}{ID}
+        </where>
+	</select>	
+	
+	<select id="findByCondition" resultType="map">
+		select 
+		<foreach collection="properties" item="item" index="index" separator=",">
+          	${dollor}{item}
+        </foreach>
+        from ${classNameLL} 
+        <where>
+        	<if test="condition != null">
+        		${dollor}{condition}
+        	</if>
+        </where>
+	</select>		
+	
+	<!-- update -->
+	<update id="updateByID" >
+		<![CDATA[  
+			update ${classNameLL} set 
+			<#list fieldList as pro>
+				${pro.fieldNameLL} = #${dakuohao}entity.${pro.fieldNameL}}<#if pro_has_next>,</#if>
+			</#list>
+      	]]>
+      	<where>
+      		${classNameLL}id = ${jinhao}{ID}
+      	</where>  		
+	</update>
+	
+	<update id="updateByCondition">
+		<![CDATA[  
+			update ${classNameLL} set 
+			<#list fieldList as pro>
+				${pro.fieldNameLL} = #${dakuohao}entity.${pro.fieldNameL}}<#if pro_has_next>,</#if>
+			</#list>
+      	]]>
+      	<where>
+      		<if test="condition != null">
+      			${dollor}{condition}
+      		</if>
+      	</where>  		
+	</update>
+	
+	<update id="updatePropByID">
+		<![CDATA[  
+			update ${classNameLL} set
+		]]>
+		<foreach collection="prop" item="item" index="index" separator=",">
+          	${dollor}{item.key} = ${jinhao}{item.value}
+        </foreach>
+        <where>
+        	${classNameLL}id = ${jinhao}{ID}
+        </where>
+	</update>
+	
+	<update id="updatePropByCondition">
+		<![CDATA[  
+			update ${classNameLL} set
+		]]>
+		<foreach collection="prop" item="item" index="index" separator=",">
+          	${dollor}{item.key} = ${jinhao}{item.value}
+        </foreach>
+        <where>
+        	<if test="condition != null">
+        		${dollor}{condition}
+        	</if>
+        </where>
+	</update>	
+	
+	<!-- delete -->
+	<delete id="deleteByID" parameterType="string">
+		<![CDATA[   
+			delete from ${classNameLL}   
+		]]>
+		<where>
+			${classNameLL}id = ${jinhao}{ID}
+		</where>
+	</delete>	
+
+	<delete id="deleteByCondition" parameterType="string">
+		<![CDATA[   
+			delete from ${classNameLL}  
+		]]>
+		<where>
+			<if test="condition != null">
+				${dollor}{condition}
+			</if>	
+		</where>	
+	</delete>	
+	
+	<delete id="delete${className}s" parameterType="string">
+		<![CDATA[   
+			delete from activity    
+		]]>
+		<where>
+			 ${classNameLL}id in
+			 <foreach collection="IDs" item="item" index="index" separator="," open="(" close=")">
+          		${jinhao}{item}
+        	 </foreach>
+		</where>	
+	</delete>
+	
+	<!-- save -->
+	<insert id="save" parameterType="${entityPackage}${classNameL}.${className}">  
+     	<![CDATA[   
+        	 insert into ${classNameLL} (<#list fieldList as pro>${pro.fieldNameLL}<#if pro_has_next>, </#if></#list>)
+        	 values (<#list fieldList as pro>#${dakuohao}${pro.fieldNameL}}<#if pro_has_next>, </#if></#list>)	
+    	 ]]>   
+    </insert>
+    
+    <insert id="save${className}s"> 
+	 	 <![CDATA[  
+	    	insert into ${classNameLL} (<#list fieldList as pro>${pro.fieldNameLL}<#if pro_has_next>, </#if></#list>) 
+	    	VALUES 
+	    ]]>  
+	    <foreach collection="entities" item="item" index="index" separator=",">   
+	         (<#list fieldList as pro>#${dakuohao}item.${pro.fieldNameL}}<#if pro_has_next>, </#if></#list>)
+	    </foreach> 
+	</insert> 
+	
+</mapper>

@@ -1,0 +1,15 @@
+package ${package};
+
+import ${entityPackage}${className}Entity;
+
+/**
+ * 展示类
+ * 
+ * @author ${author}
+ * 
+ */
+ 
+public class ${className}Dto extends ${className}Entity{
+
+	
+}

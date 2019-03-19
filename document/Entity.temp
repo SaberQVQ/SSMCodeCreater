@@ -1,0 +1,34 @@
+package ${package};
+
+/**
+ * entity
+ * 
+ * @author ${author}
+ * 
+ */
+public class ${entityName}Entity {
+
+	<#list attributes as att>
+	private ${att.fieldType} ${att.fieldName};
+	</#list>
+
+	public ${entityName}Entity(){
+	}
+	
+	public ${entityName}Entity(<#list attributes as att>${att.fieldType} ${att.fieldName}<#if att_has_next>, </#if></#list>){
+		<#list attributes as att>
+		this.${att.fieldName} = ${att.fieldName};
+		</#list>
+	}
+	
+	<#list attributes as att>
+	public ${att.fieldType} get${att.fieldName?cap_first}(){
+		return ${att.fieldName};
+	}
+	
+	public void set${att.fieldName?cap_first}(${att.fieldType} ${att.fieldName}) {
+		this.${att.fieldName} = ${att.fieldName};
+	}
+	</#list>
+	
+}
