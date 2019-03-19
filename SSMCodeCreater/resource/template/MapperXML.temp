@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+
+<!-- create by ${author} -->
+
+<mapper namespace="${daoPackage}${classNameL}EntityMapper">
+
+	<resultMap id="BaseResultMap" type="${entityPackage}${classNameL}Entity" >
+		<#if fieldId??>
+			<id column="${fieldId}" property="${fieldId}" jdbcType="${fieldIdType}" />
+		</#if>
+		<#list fieldList as fields>
+			<result column="${fields.fieldName}" property="${fields.fieldNameProperty}" jdbcType="${fields.fieldType}" /><#if fields_has_next></#if>
+		</#list>
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		<#list fieldList as fields>${fields.fieldName}<#if fields_has_next>, </#if></#list>
+  	</sql>
+  	
+  	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+    	<include refid="Base_Column_List" />
+    	from ${tableName}
+    	<#if fieldId??>
+    		where ${fieldId} = #${dakuohao}${fieldId},jdbcType=${fieldIdType}}
+		</#if>
+  	</select>
+  	
+  	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    	delete from ${tableName}
+		<#if fieldId??>
+    		where ${fieldId} = #${dakuohao}${fieldIdProperty},jdbcType=${fieldIdType}}
+		</#if>
+	</delete>
+	
+	<insert id="insert" parameterType="${entityPackage}${classNameL}Entity" useGeneratedKeys="true" keyColumn="${fieldId}" keyProperty="${fieldIdProperty}">
+		insert into ${tableName}
+		(<#list fieldList as fields>${fields.fieldName}<#if fields_has_next>, </#if></#list>)
+		values
+		(<#list fieldList as fields>#${dakuohao}${fields.fieldNameProperty},jdbcType=${fields.fieldType}}<#if fields_has_next>, </#if></#list>)
+	</insert>
+  
+	<insert id="insertSelective" parameterType="${entityPackage}${classNameL}Entity" >
+		insert into ${tableName}
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<#list fieldList as fields>
+				<if test="${fields.fieldNameProperty} != null" >
+	        		${fields.fieldName}
+	      		</if>
+	      		<#if fields_has_next>,</#if>
+			</#list>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+    		<#list fieldList as fields>
+				<if test="${fields.fieldNameProperty} != null" >
+	        		#${dakuohao}${fields.fieldNameProperty},jdbcType=${fields.fieldType}}
+	      		</if>
+	      		<#if fields_has_next>,</#if>
+			</#list>
+		</trim>
+	</insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="${entityPackage}${classNameL}Entity" >
+    update ${tableName}
+    <set>
+		<#list fieldList as fields>
+			<if test="${fields.fieldNameProperty} != null" >
+				${fields.fieldNameProperty} = #${dakuohao}${fields.fieldNameProperty},jdbcType=${fields.fieldType}}
+      		</if>
+      		<#if fields_has_next>,</#if>
+		</#list>
+    </set>
+    where ID = #${dakuohao}${fieldId},jdbcType=${fieldIdProperty}}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="${entityPackage}${classNameL}Entity" >
+    update ${tableName}
+    set
+		<#list fieldList as fields>
+			<if test="${fields.fieldNameProperty} != null" >
+				${fields.fieldNameProperty} = #${dakuohao}${fields.fieldNameProperty},jdbcType=${fields.fieldType}}
+			</if>
+			<#if fields_has_next>,</#if>
+		</#list>
+    where 
+    	<#if fieldId??>
+    		${fieldId} = #${dakuohao}${fieldIdProperty},jdbcType=${fieldIdType}}
+		</#if>
+  </update>
+
+</mapper>

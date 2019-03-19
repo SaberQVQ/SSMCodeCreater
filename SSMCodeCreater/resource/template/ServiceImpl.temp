@@ -1,0 +1,85 @@
+package ${package};
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ${dtoPackage}${className}Dto;
+import ${dtoPackage}${className}SearchDto;
+import ${entityPackage}${className}Entity;
+import ${servicePackage}${className}Service;
+import ${daoPackage}${className}Dao;
+
+/**
+ * Service
+ * 
+ * @author ${author}
+ * 
+ */
+ 
+@Service
+@Transactional(readOnly = true)
+public class ${className}ServiceImpl implements ${className}Service{
+	
+	@Autowired
+	private ${className}EntityMapper ${classNameL}Dao;
+
+	/**
+     * 查询
+     */
+	@Override
+	public List<${className}Dto> selectListByPage(PageParameter page, ${className}SearchDto searchDto){
+		List<${className}Dto> result = this.${classNameL}Dao.selectListByPage(page, searchDto);
+		return result;
+	}
+	
+	/**
+     * 添加、修改
+     */
+	@Override
+	@Transactional(readOnly = false)
+	public HandleResult save(${className}Entity saveEntity){
+		HandleResult result = new HandleResult();
+
+		// 增加或编辑
+		if (saveEntity.getId() == null) {
+			this.${classNameL}Dao.insert(saveEntity);
+		} else {
+			this.${classNameL}Dao.updateByPrimaryKey(saveEntity);
+		}
+
+		result.setSuccess(true);
+		result.setMsgText("保存成功！");
+
+		return result;
+	}
+	
+	 /**
+     * 删除
+     */
+	@Override
+	@Transactional(readOnly = false)
+	public HandleResult remove(String ids){
+		HandleResult result = new HandleResult();
+
+		if (StringUtils.isBlank(ids)) {
+			result.setSuccess(false);
+			result.setMsgText("删除失败！");
+		} else {
+			for (String id : ids.split(",")) {
+				if (!StringUtils.isBlank(id)) {
+					this.${classNameL}Dao.deleteByPrimaryKey(Integer.parseInt(id));
+				}
+			}
+
+			result.setSuccess(true);
+			result.setMsgText("删除成功！");
+		}
+
+		return result;
+	}
+	
+}

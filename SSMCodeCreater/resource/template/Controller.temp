@@ -1,0 +1,72 @@
+package ${package};
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import ${dtoPackage}${className}Dto;
+import ${dtoPackage}${className}SearchDto;
+import ${entityPackage}${className}Entity;
+import ${servicePackage}${className}Service;
+
+/**
+ * Controller
+ * 
+ * @author ${author}
+ * 
+ */
+ 
+@Controller
+@RequestMapping("/${classNameL}Controller")
+public class ${className}Controller {
+
+	@Autowired
+	private ${className}Service ${classNameL}Svc;
+
+	/**
+	 * 页面路径
+	 */
+	@RequestMapping
+    public String view() {
+        return "页面路径";
+    }
+    
+    /**
+     * 查询
+     */
+    @RequestMapping("/list")
+    @ResponseBody
+    public DataGridPageDto<${className}Dto> selectListByPage(PageParameter page, ${className}SearchDto searchDto){
+        DataGridPageDto<${className}Dto> result = new DataGridPageDto<${className}Dto>();
+        List<${className}Dto> list = ${classNameL}Svc.selectListByPage(page, searchDto);
+        result.setRows(list);
+        result.setTotal(page.getTotalCount());
+        return result;
+    }
+    
+    /**
+     * 添加、修改
+     */
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @ResponseBody
+    public HandleResult save(@RequestBody ${className}Entity saveEntity) {
+    	HandleResult res =  ${classNameL}Svc.save(saveEntity);
+        return res;
+    }
+    
+    /**
+     * 删除
+     */
+    @RequestMapping("/remove/{ids}")
+    @ResponseBody
+    public HandleResult remove(@PathVariable String ids) {
+        return ${classNameL}Svc.remove(ids);
+    }
+
+}

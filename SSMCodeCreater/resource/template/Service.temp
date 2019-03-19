@@ -1,0 +1,32 @@
+package ${package};
+
+import java.util.List;
+
+import ${dtoPackage}${className}Dto;
+import ${dtoPackage}${className}SearchDto;
+import ${entityPackage}${className}Entity;
+
+/**
+ * Service方法接口
+ * 
+ * @author ${author}
+ * 
+ */
+ 
+public interface ${className}Service {
+
+	/**
+     * 查询
+     */
+    List<${className}Dto> selectListByPage(PageParameter page, ${className}SearchDto searchDto);
+       
+    /**
+     * 添加、修改
+     */
+    HandleResult save(${className}Entity saveEntity);
+    
+    /**
+     * 删除
+     */
+    HandleResult remove(String ids);
+}
