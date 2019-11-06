@@ -43,12 +43,13 @@ public class CodeCreater {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (fis != null)
+			if (fis != null) {
 				try {
 					fis.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			}
 			fis = null;
 		}
 	}
@@ -56,7 +57,7 @@ public class CodeCreater {
     private static final Logger logger = Logger.getLogger(CodeCreater.class);
 	//private static List<Integer> resultList = new ArrayList<Integer>();
 	
-	public static void StartCreate(String readPath,String writePath) throws IOException, TemplateException{
+	public static void StartCreate(String readPath, String writePath) throws IOException, TemplateException{
 		InitLog4jConfig();
 		
 		PathSetting.readPath = readPath;
@@ -68,7 +69,8 @@ public class CodeCreater {
 		String fileType = filePathArr[filePathArr.length - 1];
 		IFileReader reader;
 		List<Entity> entityList = null;
-		
+
+		//判断文件类型
 		if (fileType.equals("doc")) {
 			reader = new WordReader();
 			entityList = reader.readFile(readPath);
@@ -80,11 +82,11 @@ public class CodeCreater {
 		try {
 			for (int i = 0; i < entityList.size(); i++) {
 				Entity entity = entityList.get(i);
-//				createDatabase(entity);
+//				createDatabase(entity);  //创建数据库
 				createTask(entity);
 			}
 		} catch (Exception e) {
-			System.out.println("");
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -109,6 +111,7 @@ public class CodeCreater {
 	
 	public static void createTask(Entity entity){
 		System.out.println("为" + entity.getEntityName() + "加载模板\n");
+
 		new EntityCreater().executeCreateTask(entity);
 		new EntityDtoCreater().executeCreateTask(entity);
 		new EntitySearchDtoCreater().executeCreateTask(entity);

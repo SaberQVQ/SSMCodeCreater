@@ -19,8 +19,9 @@ public class CustomMapperXMLCreater extends MapperXMLCreater{
 		setTemplatePath(PathSetting.customMapperXMLTemplate);
 	}
 
-	public void loadTemplateAndWriteFile(String className,String fileType,
-			Map<String, Object> data) {
+	@Override
+    public void loadTemplateAndWriteFile(String className, String fileType,
+                                         Map<String, Object> data) {
 		try {
 			Template entityTemplate = cfg.getTemplate(templatePath);
 			FileOutputStream entityFos = new FileOutputStream(writePath

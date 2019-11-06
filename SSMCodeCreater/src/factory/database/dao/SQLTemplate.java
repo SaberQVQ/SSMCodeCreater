@@ -34,7 +34,7 @@ public class SQLTemplate {
 			Field field = fieldList.get(i);
 			sb.append("`" + toUpcase(field.getFieldName()) + "`" + " " + field.getFieldType() + checkFieldTypeCount(field.getFieldTypeCount()));
 		}
-		return baseSql + sb.toString() + ")";	
+		return baseSql + sb.toString() + ")";
 	}
 	
 	/**

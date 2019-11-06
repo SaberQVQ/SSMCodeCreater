@@ -13,9 +13,6 @@ import factory.stringCaseUtil.StringCaseUtil;
 
 /**
  * 实体对象mapperXML
- * 
- * @author huangkai
- * 
  */
 public class MapperXMLCreater extends BaseCreater{
 
@@ -32,7 +29,8 @@ public class MapperXMLCreater extends BaseCreater{
 		fillData(className, entity);
 	}
 	
-	protected void fillData(String className, Entity entity){
+	@Override
+    protected void fillData(String className, Entity entity){
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("author", entity.getAuthor());
 		// 首字母大写的类名
@@ -54,6 +52,9 @@ public class MapperXMLCreater extends BaseCreater{
 		List<Field> fieldList = entity.getFields();
 		for (int i = 0; i < fieldList.size(); i++) {
 			Map<String,String> fieldMap = new HashMap<String,String>();
+			if (null == fieldList.get(i) || "" == fieldList.get(i).getFieldName()) {
+				continue;
+			}
 			fieldMap.put("fieldType", StringCaseUtil.upcaseAll(fieldList.get(i).getFieldType()));
 			fieldMap.put("fieldName", fieldList.get(i).getFieldName());
 			fieldMap.put("fieldNameProperty", StringCaseUtil.lowcaseFirstCharRemoveMark(fieldList.get(i).getFieldName()));

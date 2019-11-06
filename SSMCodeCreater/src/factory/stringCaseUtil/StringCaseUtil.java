@@ -5,8 +5,36 @@ package factory.stringCaseUtil;
  * 
  */
 public class StringCaseUtil {
-	
-	//首字母大写
+
+	/**
+	 * 首字母小写 其余每个单词首字母大写
+	 * @param s
+	 * @return
+	 */
+	public static String lowcaseFirstCharRemoveMark(String s){
+		StringBuilder sb = removeMark(s);
+		sb.setCharAt(0, Character.toLowerCase(sb.charAt(0)));
+		return sb.toString();
+	}
+
+
+
+	/**
+	 * 首字母大写 其余每个单词首字母大写
+	 * @param s
+	 * @return
+	 */
+	public static String upcaseFirstCharRemoveMark(String s){
+		StringBuilder sb = removeMark(s);
+		return sb.toString();
+	}
+
+
+	/**
+	 * 首字母大写
+	 * @param s
+	 * @return
+	 */
 	public static String upcaseFirstChar(String s){
 		if (s == null || s.equals("")) {
 			System.out.println("转换字符参数错误");
@@ -17,7 +45,12 @@ public class StringCaseUtil {
 		sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
 		return sb.toString();
 	}
-	//首字母小写
+
+	/**
+	 * 首字母小写
+	 * @param s
+	 * @return
+	 */
 	public static String lowcaseFirstChar(String s){
 		if (s == null || s.equals("")) {
 			System.out.println("转换字符参数错误");
@@ -28,24 +61,15 @@ public class StringCaseUtil {
 		sb.setCharAt(0, Character.toLowerCase(sb.charAt(0)));
 		return sb.toString();
 	}
-	
-	//首字母大写 其余每个单词首字母大写
-	public static String upcaseFirstCharRemoveMark(String s){
-		StringBuilder sb = removeMark(s);
-		return sb.toString();
-	}
-	
-	//首字母小写 其余每个单词首字母大写
-	public static String lowcaseFirstCharRemoveMark(String s){
-		StringBuilder sb = removeMark(s);
-		sb.setCharAt(0, Character.toLowerCase(sb.charAt(0)));
-		return sb.toString();
-	}
-	
-	//去除"_"  每个单词首字母大写
+
+	/**
+	 *  在数据库设计文件中去除"_"后  每个单词首字母大写
+	 * @param s
+	 * @return
+	 */
 	private static StringBuilder removeMark(String s){
 		StringBuilder sb = new StringBuilder();
-		if (s == null || s.equals("")) {
+		if (null == s || ("").equals(s)) {
 			System.out.println("转换字符参数错误");
 			sb.append("");
 			return sb;

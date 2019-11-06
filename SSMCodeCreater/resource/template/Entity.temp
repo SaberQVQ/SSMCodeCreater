@@ -6,16 +6,16 @@ package ${package};
  * @author ${author}
  * 
  */
-public class ${entityName}Entity {
+public class ${entityNameU}Entity {
 
 	<#list attributes as att>
 	private ${att.fieldType} ${att.fieldName};
 	</#list>
 
-	public ${entityName}Entity(){
+	public ${entityNameU}Entity(){
 	}
 	
-	public ${entityName}Entity(<#list attributes as att>${att.fieldType} ${att.fieldName}<#if att_has_next>, </#if></#list>){
+	public ${entityNameU}Entity(<#list attributes as att>${att.fieldType} ${att.fieldName}<#if att_has_next>, </#if></#list>){
 		<#list attributes as att>
 		this.${att.fieldName} = ${att.fieldName};
 		</#list>

@@ -25,8 +25,9 @@ public class CustomDaoCreater extends DaoCreater{
 		setTemplatePath(PathSetting.customDaoTemplate);
 	}
 	
-	protected void loadTemplateAndWriteFile(String className,String fileType,
-			Map<String, Object> data) {
+	@Override
+    protected void loadTemplateAndWriteFile(String className, String fileType,
+                                            Map<String, Object> data) {
 		try {
 			Template entityTemplate = cfg.getTemplate(templatePath);
 			FileOutputStream entityFos = new FileOutputStream(writePath

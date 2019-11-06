@@ -21,10 +21,15 @@ import freemarker.template.TemplateException;
 public abstract class BaseCreater {
 	
 	private String pathKey = "";
+
 	private static PropertiesReader reader;
+
 	protected static Map<String, String> map;
+
 	protected String templatePath = "";
+
 	protected String writePath = (PathSetting.writePath.endsWith("/") ? PathSetting. writePath : PathSetting.writePath + "/");
+
 	protected Configuration cfg = new Configuration();
 	
 	protected void initReader(){
@@ -63,8 +68,9 @@ public abstract class BaseCreater {
 	}
 	
 	private String getParam(String key) {
-		if (map.containsKey(key))
+		if (map.containsKey(key)){
 			return map.get(key);
+		}
 		else {
 			System.err.println("读取" + key + "出错");
 			return "";
